@@ -3,6 +3,7 @@ from planners import GreedyPlanner, ShortestProcessingTime, DedicatedResourcePla
 import pandas as pd
 running_time = 5000
 import numpy as np
+import pickle as pkl
 # You can build your bayesian optimization model around this framework:
 # -Determine parameters for the planner
 # -Run the simulation with the planner
@@ -41,9 +42,17 @@ def simulate_competition(A):
   
 def aggregate_sims(A):
 
+    import time
+    cur_time = int(time.time())
+    seed = cur_time + np.random.randint(1, 1000)  # + len(os.listdir(data_path)) +
+    np.random.seed(seed)
+    model_num = np.random.randint(0, 1000)
     tot_res = []
+
     for ind in range(5):
-        tot_res.append(simulate_competition(A))
+        res = simulate_competition(A)
+        tot_res.append(res)
+        pkl.dump(tot_res, open('res_slow_'+ str(model_num) + '.pkl', 'wb'))
 
     return np.array(tot_res).mean()
 

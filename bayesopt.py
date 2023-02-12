@@ -34,21 +34,18 @@ def main():
              Real(0, 5, name='a3'),
              Real(0, 5, name='a4'),
              Real(0, 5, name='a5'),
-             Real(10, 15, name='a6')]
+             Real(10, 20, name='a6')]
 
     res = gp_minimize(aggregate_sims,  # the function to minimize
                       space,  # the bounds on each dimension of x
                       acq_func="EI",  # the acquisition function
-                      n_calls=5,  # the number of evaluations of f
+                      n_calls=15,  # the number of evaluations of f
                       n_random_starts=3,  # the number of random initialization points
                       noise=0.1 ** 2,  # the noise level (optional)
                       random_state=1234)
 
     print(res)
-
     pkl.dump(res, open('res_slow.pkl', 'wb'))
-
-
 
 if __name__ == "__main__":
 
