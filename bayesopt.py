@@ -56,7 +56,7 @@ def main():
     model_num = np.random.randint(0, 100000)
 
 
-    pkl.dump(res, open('res_slow_'+str(model_num)+'.pkl', 'wb'))
+    pkl.dump(res, open('res_n_system_'+str(model_num)+'.pkl', 'wb'))
 
 if __name__ == "__main__":
 
