@@ -9,6 +9,9 @@ import sys
 sys.path.append(r'C:\Users\user\workspace\scikit-optimize')
 sys.path.append(r'C:\Users\user\workspace\scikit-optimize\skopt')
 
+sys.path.append('/home/eliransc/projects/def-dkrass/eliransc/scikit-optimize')
+sys.path.append('/home/eliransc/projects/def-dkrass/eliransc/scikit-optimize/skopt')
+
 import pickle as pkl
 
 import os
