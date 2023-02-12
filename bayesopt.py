@@ -34,7 +34,7 @@ def main():
              Real(0, 5, name='a3'),
              Real(0, 5, name='a4'),
              Real(0, 5, name='a5'),
-             Real(10, 20, name='a6')]
+             Real(10, 30, name='a6')]
 
     res = gp_minimize(aggregate_sims,  # the function to minimize
                       space,  # the bounds on each dimension of x
