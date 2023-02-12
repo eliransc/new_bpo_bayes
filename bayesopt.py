@@ -48,7 +48,15 @@ def main():
                       random_state=1234)
 
     print(res)
-    pkl.dump(res, open('res_slow.pkl', 'wb'))
+
+    import time
+    cur_time = int(time.time())
+    seed = cur_time + np.random.randint(1, 1000)  # + len(os.listdir(data_path)) +
+    np.random.seed(seed)
+    model_num = np.random.randint(0, 100000)
+
+
+    pkl.dump(res, open('res_slow_'+str(model_num)+'.pkl', 'wb'))
 
 if __name__ == "__main__":
 
