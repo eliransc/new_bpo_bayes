@@ -52,7 +52,7 @@ def aggregate_sims(A):
     for ind in range(5):
         res = simulate_competition(A)
         tot_res.append(res)
-        pkl.dump(tot_res, open('res_n_system_'+ str(model_num) + '.pkl', 'wb'))
+        pkl.dump(tot_res, open('res_simple_linear_low_utilisation_'+ str(model_num) + '.pkl', 'wb'))
 
     return np.array(tot_res).mean()
 
