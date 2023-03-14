@@ -19,7 +19,7 @@ from skopt.space import Real, Integer
 from skopt.utils import use_named_args
 
 import numpy as np
-np.random.seed(237)
+
 import matplotlib.pyplot as plt
 from skopt.plots import plot_gaussian_process
 from skopt import gp_minimize
@@ -44,9 +44,10 @@ def main():
                       noise=0.1 ** 2,  # the noise level (optional)
                       random_state=1234)
 
-    print(res)
 
-    pkl.dump(res, open('res_n_system.pkl', 'wb'))
+    model_num = np.random.randint(0, 100000)
+
+    pkl.dump(res, open(str(model_num) + '_res_n_system.pkl', 'wb'))
 
 
 
