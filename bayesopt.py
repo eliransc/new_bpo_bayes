@@ -47,7 +47,7 @@ def main():
 
     model_num = np.random.randint(0, 100000)
 
-    pkl.dump(res, open(str(model_num) + '_res_n_system.pkl', 'wb'))
+    pkl.dump(res, open(str(model_num) + '_res_slow_server.pkl', 'wb'))
 
 
 

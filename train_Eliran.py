@@ -26,7 +26,7 @@ def simulate_competition(A):
     planner1 = ShortestProcessingTime()
 
     # The config types dictates the system
-    simulator = Simulator(running_time, planner, config_type='n_system', reward_function='AUC')
+    simulator = Simulator(running_time, planner, config_type='slow_server', reward_function='AUC')
     # You can access some proporties from the simulation:
     # simulator.resource_pools: for each tasks 1) the resources that can process it and 2) the mean and variance of the processing time of that assignment
     # simulator.mean_interarrival_time
