@@ -39,7 +39,7 @@ def main():
     res = gp_minimize(aggregate_sims,  # the function to minimize
                       space,  # the bounds on each dimension of x
                       acq_func="EI",  # the acquisition function
-                      n_calls=25,  # the number of evaluations of f
+                      n_calls=15,  # the number of evaluations of f
                       n_random_starts=3,  # the number of random initialization points
                       noise=0.1 ** 2,  # the noise level (optional)
                       random_state=1234)
@@ -47,7 +47,7 @@ def main():
 
     model_num = np.random.randint(0, 100000)
 
-    pkl.dump(res, open(str(model_num) + '_res_full_system.pkl', 'wb'))
+    pkl.dump(res, open(str(model_num) + '_res_low_utilization.pkl', 'wb'))
 
 
 
