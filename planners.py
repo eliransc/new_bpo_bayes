@@ -33,14 +33,29 @@ class Bayes_planner:
 
         task_ranking_dict = {}
 
-        Tasks_names = ['Task A', 'Task B']
+        Tasks_names = tasks
 
+        res_list = [col for col in list(df.columns) if 'Resource' in col]
         for task in Tasks_names:
 
-            if df.loc[df['task'] == task, 'Resource 1'].item() < df.loc[df['task'] == task, 'Resource 2'].item():
-                task_ranking = ['Resource 1', 'Resource 2']
-            else:
-                task_ranking = ['Resource 2', 'Resource 1']
+
+            curr_df = pd.DataFrame([])
+            for ind, res in enumerate(res_list):
+                curr_df.loc[ind, 'Resource'] = res
+                curr_df.loc[ind, 'time'] = df.loc[df['task'] == task, res].item()
+
+            curr_df = curr_df.sort_values(by=['time'])
+            curr_df = curr_df.reset_index()
+            task_ranking = []
+
+            for ind in range(curr_df.shape[0]):
+                if curr_df.loc[ind, 'time'].item() > 0:
+                    task_ranking.append(curr_df.loc[ind, 'Resource'])
+
+            # if df.loc[df['task'] == task, 'Resource 1'].item() < df.loc[df['task'] == task, 'Resource 2'].item():
+            #     task_ranking = ['Resource 1', 'Resource 2']
+            # else:
+            #     task_ranking = ['Resource 2', 'Resource 1']
 
             task_ranking_dict[task] = task_ranking
 
@@ -48,14 +63,17 @@ class Bayes_planner:
 
         resourse_ranking_dict = {}
 
-        res_names = ['Resource 1', 'Resource 2']
+        # res_names = ['Resource 1', 'Resource 2']
 
-        for res in res_names:
+        for res in res_list:
 
-            if df.loc[df['task'] == 'Task A', res].item() < df.loc[df['task'] == 'Task B', res].item():
-                res_ranking = ['Task A', 'Task B']
-            else:
-                res_ranking = ['Task B', 'Task A']
+            num_none_nan = np.sum(df.sort_values(by=[res])[res] > 0)
+            res_ranking = list(df.sort_values(by=[res])['task'][:num_none_nan])
+
+            # if df.loc[df['task'] == 'Task A', res].item() < df.loc[df['task'] == 'Task B', res].item():
+            #     res_ranking = ['Task A', 'Task B']
+            # else:
+            #     res_ranking = ['Task B', 'Task A']
 
             resourse_ranking_dict[res] = res_ranking
 
@@ -64,16 +82,22 @@ class Bayes_planner:
         resource_ranking_dict_score = {}
 
         for key in resourse_ranking_dict.keys():
-            resource_ranking_dict_score[(key, resourse_ranking_dict[key][0])] = 1
-            resource_ranking_dict_score[(key, resourse_ranking_dict[key][1])] = 2
+            for ind_task, task in enumerate(resourse_ranking_dict[key]):
+                resource_ranking_dict_score[(key, resourse_ranking_dict[key][ind_task])] = ind_task + 1
+
+            # resource_ranking_dict_score[(key, resourse_ranking_dict[key][0])] = 1
+            # resource_ranking_dict_score[(key, resourse_ranking_dict[key][1])] = 2
 
         self.resource_ranking_dict_score = resource_ranking_dict_score
 
         task_ranking_dict_score = {}
 
         for key in task_ranking_dict.keys():
-            task_ranking_dict_score[(key, task_ranking_dict[key][0])] = 1
-            task_ranking_dict_score[(key, task_ranking_dict[key][1])] = 2
+            for ind_res, res in enumerate(task_ranking_dict[key]):
+                task_ranking_dict_score[(key, task_ranking_dict[key][ind_res])] = ind_res + 1
+
+            # task_ranking_dict_score[(key, task_ranking_dict[key][0])] = 1
+            # task_ranking_dict_score[(key, task_ranking_dict[key][1])] = 2
 
         self.task_ranking_dict_score = task_ranking_dict_score
 
@@ -129,6 +153,7 @@ class Bayes_planner:
                 score = self.a1 * mean_val - self.a2 * prob_fin - self.a3 * queue_lenght\
                         + self.a4*self.resource_ranking_dict_score[(resource, task.task_type)]+self.a5*self.task_ranking_dict_score[(task.task_type, resource)]
                 curr_ind = df_scores.shape[0]
+
 
                 df_scores.loc[curr_ind, 'task_type'] = task.task_type
                 df_scores.loc[curr_ind, 'task'] = task
