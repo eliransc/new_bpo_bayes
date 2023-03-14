@@ -29,6 +29,8 @@ class SaveOnBestTrainingRewardCallback(BaseCallback):
         self.log_dir = log_dir
         self.save_path = os.path.join(log_dir, model_name)
         self.best_mean_reward = -np.inf
+        self.prev_steps = 0
+        self.episode_lengths = []
 
     def _init_callback(self) -> None:
         # Create folder if needed
@@ -37,27 +39,35 @@ class SaveOnBestTrainingRewardCallback(BaseCallback):
 
     def _on_step(self) -> bool:
         if self.n_calls % self.check_freq == 0:
+            # Retrieve training reward
+            x, y = ts2xy(load_results(self.log_dir), "timesteps")
+            #print(x, y)
+            if len(x) > len(self.episode_lengths):
+                if len(x) == 1:
+                    self.episode_lengths.append(x[0])
+                else:
+                    self.episode_lengths.append(x[-1]-x[-2])
+            #print(x,y, self.episode_lengths)
+            if len(x) > 5:
+                # Mean training reward over the last 100 episodes
+                mean_reward = np.mean(y[-5:])
+                # nr_eps = 5
+                # mean_reward = np.mean([y[-i]/self.episode_lengths[-i] for i in range(len(y[-nr_eps:]))]) 
+                if self.verbose >= 1:
+                    print(f"Num timesteps: {self.num_timesteps}")
+                    print(f"Best mean reward: {self.best_mean_reward:.2f} - Last mean reward per episode: {mean_reward:.2f}")
 
-          # Retrieve training reward
-          x, y = ts2xy(load_results(self.log_dir), "timesteps")
-          if len(x) > 0:
-              # Mean training reward over the last 100 episodes
-              mean_reward = np.mean(y[-1:])
-              if self.verbose >= 1:
-                print(f"Num timesteps: {self.num_timesteps}")
-                print(f"Best mean reward: {self.best_mean_reward:.2f} - Last mean reward per episode: {mean_reward:.2f}")
+                # New best model, you could save the agent here
+                if mean_reward > self.best_mean_reward:
+                    self.best_mean_reward = mean_reward
+                    # Example for saving best model
+                    if self.verbose >= 1:
+                        print(f"Saving new best model to {self.save_path}")
+                    self.model.save(self.save_path)
 
-              # New best model, you could save the agent here
-              if mean_reward > self.best_mean_reward:
-                  self.best_mean_reward = mean_reward
-                  # Example for saving best model
-                  if self.verbose >= 1:
-                    print(f"Saving new best model to {self.save_path}")
-                  self.model.save(self.save_path)
+            return True
 
-        return True
-
-def custom_scheduler(initial_value: float) -> Callable[[float], float]:
+def custom_schedule(initial_value: float) -> Callable[[float], float]:
     """
     Linear learning rate schedule.
 
@@ -79,4 +89,10 @@ def custom_scheduler(initial_value: float) -> Callable[[float], float]:
         else:
             return initial_value * 0.1
 
+    return func
+
+
+def linear_schedule(initial_value: float) -> Callable[[float], float]:
+    def func(progress_remaining: float) -> float:
+        return progress_remaining * initial_value
     return func

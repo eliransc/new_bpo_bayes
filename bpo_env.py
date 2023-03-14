@@ -22,17 +22,25 @@ class BPOEnv(Env):
         self.step_print = False
         self.last_reward = 0
         self.additional_rewards = 0
+        self.previous_reward_time = 0
 
         self.simulator = Simulator(running_time=self.running_time, planner=None, config_type=self.config_type, reward_function=self.reward_function, write_to=self.write_to)
 
         #define lows and highs for different sections of the input
         lows = np.array([0 for x in range(len(self.simulator.input))])
 
+        # Availability, busy times, assigned to, task numbers proportion, total
         highs = np.array([1 for x in range(len(self.simulator.resources))] +\
-                         [50 for x in range(len(self.simulator.resources))] +\
+                         [np.finfo(np.float64).max for x in range(len(self.simulator.resources))] +\
                          [float(len(self.simulator.task_types)) for x in range(len(self.simulator.resources))] +\
-                         [1 for x in range(len(self.simulator.task_types))])
-
+                         [1 for x in range(len(self.simulator.task_types))] +\
+                         [np.finfo(np.float64).max])                         
+        
+        # highs = np.array([1 for x in range(len(self.simulator.resources))] +\
+        #                  [np.finfo(np.float64).max for x in range(len(self.simulator.resources))] +\
+        #                  [float(len(self.simulator.task_types)) for x in range(len(self.simulator.resources))] +\
+        #                  [np.finfo(np.float64).max for x in range(len(self.simulator.task_types))])
+        
         self.observation_space = spaces.Box(low=lows,
                                             high=highs,
                                             shape=(len(self.simulator.input),), dtype=np.float64) #observation space is the cartesian product of resources and tasks
@@ -53,12 +61,14 @@ class BPOEnv(Env):
             self.nr_bad_assignments += 1
         elif action == len(self.simulator.output)-1:
             self.nr_postpone += 1
-        if self.counter % 500 == 0:
-            print(f'{self.nr_bad_assignments}/500, nr of postpones: {self.nr_postpone}/500')
+
+        print_every = 500
+        if self.counter % print_every == 0:
+            print(f'nr of postpones: {self.nr_postpone}/{print_every}')
             self.nr_bad_assignments = 0
             self.nr_postpone = 0
             state = self.simulator.get_state()
-            print(state[-2], '\t', state[-1], '\t', len(self.simulator.uncompleted_cases))
+            print(state, '\n')
         """Run one timestep of the environment's dynamics. When end of
         episode is reached, you are responsible for calling `reset()`
         to reset this environment's state.
@@ -99,7 +109,6 @@ class BPOEnv(Env):
         if self.step_print: print('Action:\t', assignment)
         if assignment != 'Postpone':
             if self.simulator.planner == None:
-                #print(assignment)
                 assignment = (assignment[0], (next((x for x in self.simulator.available_tasks if x.task_type == assignment[1]), None)))
             #print('stuck 1', assignment, self.simulator.now)
             self.simulator.process_assignment(assignment)
@@ -111,6 +120,7 @@ class BPOEnv(Env):
                 self.simulator.run() # breaks each time at resource assignment, continues if no assignment possible
             #print('After action: ', self.simulator.now)
         else: # Postpone action
+
             unassigned_tasks = [sum([1 if task.task_type == el else 0 for task in self.simulator.available_tasks]) for el in self.simulator.task_types] # sum of unassigned tasks per type
 
             available_resources = [resource for resource in self.simulator.available_resources]
@@ -121,16 +131,22 @@ class BPOEnv(Env):
                     available_resources == [resource for resource in self.simulator.available_resources])):
 
                 self.simulator.run()
+            self.simulator.current_reward -= 0.005
+            self.simulator.total_reward -= 0.005
             #print('After postpone: ', self.simulator.now)
 
 
 
-
         reward = self.simulator.current_reward
+        # if reward > 0:
+        #     reward = reward / (1 + (self.simulator.now-self.previous_reward_time))
+        #     self.previous_reward_time = self.simulator.now
         self.simulator.current_reward = 0
-        if reward != 0:
-            reward = 1/-reward
-            reward = min(reward, 2)
+
+        # if assignment == 'Postpone':
+        #     reward = 0
+        # elif reward != 0:
+        #     reward = min(2, 1/-reward)
 
         # if reward == 0 :
         #     reward = self.last_reward
@@ -161,8 +177,11 @@ class BPOEnv(Env):
         if self.simulator.status == 'FINISHED':
             # print(f'running: {self.simulator.running_time}, last_moment: {self.simulator.last_reward_moment}')
             # current_reward = (self.simulator.running_time - self.simulator.last_reward_moment) * len(self.simulator.uncompleted_cases)
-            # self.simulator.current_reward -= current_reward
-            # self.simulator.total_reward -= current_reward
+            if self.simulator.reward_function == 'AUC':
+                    current_reward = (self.simulator.now - self.simulator.last_reward_moment) * len(self.simulator.uncompleted_cases)
+                    self.simulator.current_reward -= current_reward
+                    self.simulator.total_reward -= current_reward
+                    self.simulator.last_reward_moment = self.simulator.now
             # self.simulator.last_reward_moment = self.simulator.running_time
 
             # reward = self.simulator.current_reward
