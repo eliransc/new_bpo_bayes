@@ -13,7 +13,7 @@ import pickle as pkl
 # -Get the total_reward
 def simulate_competition(A):
 
-    simulator_fake = Simulator(running_time, ShortestProcessingTime(), config_type='low_utilization', reward_function='AUC')
+    simulator_fake = Simulator(running_time, ShortestProcessingTime(), config_type='n_system', reward_function='AUC')
     a1 = A[0]
     a2 = A[1]
     a3 = A[2]
@@ -26,7 +26,7 @@ def simulate_competition(A):
     planner1 = ShortestProcessingTime()
 
     # The config types dictates the system
-    simulator = Simulator(running_time, planner, config_type='low_utilization', reward_function='AUC')
+    simulator = Simulator(running_time, planner, config_type='n_system', reward_function='AUC')
     # You can access some proporties from the simulation:
     # simulator.resource_pools: for each tasks 1) the resources that can process it and 2) the mean and variance of the processing time of that assignment
     # simulator.mean_interarrival_time
@@ -65,7 +65,9 @@ def main():
 
     # high_utilization = [1.321091, 4.556206,  0.790609,0.000000, 3.051695,    15.739693]
 
-    A = [1.209298, 4.898732,	0.496618, 2.658753,	2.234656,12.339795]
+    #low_utilization = [1.209298, 4.898732,	0.496618, 2.658753,	2.234656,12.339795]
+
+    A = [0.000000,	5.000000,	1.584558,	0.000000,	0.000000	, 7.0]
 
     #down_stream = [1.655077, 4.013198,0.491260, 0.279967, 2.213313, 7.287871]
 
@@ -81,7 +83,7 @@ def main():
     model_num = np.random.randint(0, 1000)
 
 
-    pkl.dump(get_results, open(str(model_num) + '_final_low_utilization.pkl', 'wb'))
+    pkl.dump(get_results, open(str(model_num) + '_final_n_system.pkl', 'wb'))
 
 
 if __name__ == "__main__":
