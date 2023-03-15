@@ -13,7 +13,7 @@ import pickle as pkl
 # -Get the total_reward
 def simulate_competition(A):
 
-    simulator_fake = Simulator(running_time, ShortestProcessingTime(), config_type='complete_all', reward_function='AUC')
+    simulator_fake = Simulator(running_time, ShortestProcessingTime(), config_type='down_stream', reward_function='AUC')
     a1 = A[0]
     a2 = A[1]
     a3 = A[2]
@@ -26,7 +26,7 @@ def simulate_competition(A):
     planner1 = ShortestProcessingTime()
 
     # The config types dictates the system
-    simulator = Simulator(running_time, planner, config_type='complete_all', reward_function='AUC')
+    simulator = Simulator(running_time, planner, config_type='down_stream', reward_function='AUC')
     # You can access some proporties from the simulation:
     # simulator.resource_pools: for each tasks 1) the resources that can process it and 2) the mean and variance of the processing time of that assignment
     # simulator.mean_interarrival_time
@@ -63,7 +63,8 @@ def aggregate_sims(A):
 
 def main():
 
-    A = [0.337, 4.110818, 1.167821, 0.862430, 0.474204, 19.11131]
+    A = [1.655077, 4.013198,0.491260, 0.279967, 2.213313, 7.287871]
+
 
     # simulate_competition(A)
 
@@ -76,7 +77,7 @@ def main():
     model_num = np.random.randint(0, 1000)
 
 
-    pkl.dump(get_results, open(str(model_num) + '_final_complete_system.pkl', 'wb'))
+    pkl.dump(get_results, open(str(model_num) + '_final_down_stream.pkl', 'wb'))
 
 
 if __name__ == "__main__":
