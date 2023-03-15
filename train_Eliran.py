@@ -52,18 +52,31 @@ def aggregate_sims(A):
     model_num = np.random.randint(0, 1000)
     tot_res = []
 
-    for ind in range(5):
+    for ind in range(20):
         res = simulate_competition(A)
         print(res)
         tot_res.append(res)
         # pkl.dump(tot_res, open('run_500_res_simple_linear_high_utilisation3_' + str(model_num) + '.pkl', 'wb'))
 
-    return np.array(tot_res).mean()
+    return tot_res #np.array(tot_res).mean()
 
 
 def main():
-    A = [1, 1, 1, 1, 1, 5]
-    simulate_competition(A)
+
+    A = [0.337, 4.110818, 1.167821, 0.862430, 0.474204, 19.11131]
+
+    # simulate_competition(A)
+
+    get_results = aggregate_sims(A)
+
+    import time
+    cur_time = int(time.time())
+    seed = cur_time + np.random.randint(1, 1000)  # + len(os.listdir(data_path)) +
+    np.random.seed(seed)
+    model_num = np.random.randint(0, 1000)
+
+
+    pkl.dump(get_results, open(str(model_num) + 'complete_system.pkl', 'wb'))
 
 
 if __name__ == "__main__":
