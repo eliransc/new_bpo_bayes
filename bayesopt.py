@@ -15,8 +15,8 @@ import os
 import pandas as pd
 
 from train_SVFA import aggregate_sims, simulate_competition
-from skopt.space import Real, Integer
-from skopt.utils import use_named_args
+# from skopt.space import Real, Integer
+# from skopt.utils import use_named_args
 from tqdm import tqdm
 import numpy as np
 
