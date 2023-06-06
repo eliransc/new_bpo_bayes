@@ -31,13 +31,13 @@ def main():
 
     # Bounded region of parameter space
 
-    pbounds = {'a1': (0, 20),
-               'a2': (0, 20),
-               'a3': (0, 20),
-               'a4': (0, 20),
-               'a5': (0, 20),
-               'a6': (0, 20),
-               'a7': (0, 10)}
+    pbounds = {'a1': (0.5, 20),
+               'a2': (0.5, 20),
+               'a3': (0.5, 20),
+               'a4': (0.5, 20),
+               'a5': (0.5, 20),
+               'a6': (0.5, 20),
+               'a7': (0.5, 10)}
 
     optimizer = BayesianOptimization(
         f=aggregate_sims,
@@ -49,6 +49,17 @@ def main():
 
     for ind in tqdm(range(2)):
 
+        optimizer.probe(
+            params=[2, 4, 2, 2, 2, 2, 2],
+            lazy=True,
+        )
+
+        optimizer.maximize(init_points=0, n_iter=0)
+
+        logger = JSONLogger(path="./logs.json")
+        optimizer.subscribe(Events.OPTIMIZATION_STEP, logger)
+
+        optimizer.maximize(init_points=0, n_iter=0)
 
         if os.path.exists('./logs.json'):
 
@@ -58,6 +69,7 @@ def main():
             print('num_ites is 1')
 
             print('Start optimizing')
+
             optimizer.maximize(
                 init_points=0,
                 n_iter=1,
