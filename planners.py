@@ -163,7 +163,7 @@ class Bayes_planner(Planner):
                 task = assignment[1]
 
                 mean_val = self.df.loc[self.df['task'] == task.task_type, resource].item()
-                var_val = self.df.loc[self.df['task'] == task.task_type, resource].item()
+                var_val = (self.df.loc[self.df['task'] == task.task_type, resource].item())**2
                 prob_fin = self.df.loc[self.df['task'] == task.task_type, 'prob_finish'].item()
                 if task.task_type in queue_len_keys:
                     queue_lenght = queue_lens[task.task_type]

@@ -459,7 +459,10 @@ class Simulator:
                 # else:
                 #     with open(f'{self.write_to}results_{self.config_type}.txt', "a") as file:
                 #         file.write(f"{len(self.uncompleted_cases)},{resource_str}{self.total_reward},{self.sumx/self.sumw},{np.sqrt(self.sumxx / self.sumw - self.sumx / self.sumw * self.sumx / self.sumw)}\n")
-
+            
+            if self.sumw == 0:
+                return 5000,5000, 55000, 5000
+            
             return len(self.uncompleted_cases),self.total_reward,self.sumx/self.sumw,np.sqrt(self.sumxx / self.sumw - self.sumx / self.sumw * self.sumx / self.sumw)
         
 

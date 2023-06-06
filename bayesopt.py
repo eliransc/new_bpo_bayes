@@ -51,32 +51,21 @@ def main():
         allow_duplicate_points=True,  # verbose = 1 prints only when a maximum is observed, verbose = 0 is silent
     )
 
-    if os.path.exists("./slow_server.json"):
-        load_logs(optimizer, logs=["./slow_server.json"]);
+
 
     optimizer.maximize(
-        init_points=1,
-        n_iter=1,
-    )
-
-    vals = [res for i, res in enumerate(optimizer.res)]
-    print(len(vals))
-
-    logger = JSONLogger(path="./slow_server.json")
-    optimizer.subscribe(Events.OPTIMIZATION_STEP, logger)
-
-    optimizer.maximize(
-        init_points=0,
+        init_points=2,
         n_iter=20,
     )
-    
+
+
     num = np.random.randint(1,100000000)
     
     vals = [res for i, res in enumerate(optimizer.res)]
     print(len(vals))
 
 
-    pkl.dump(vals, open(r'slow_server'+str(num)+'.pkl', 'wb'))
+    pkl.dump(vals, open(r'low_utilization'+str(num)+'.pkl', 'wb'))
 
 
 
