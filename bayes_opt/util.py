@@ -298,4 +298,4 @@ class Colours:
         return cls._wrap_colour(s, cls.YELLOW)
 
 
-just_fix_windows_console()
+# just_fix_windows_console()
