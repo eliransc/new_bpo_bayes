@@ -2,7 +2,7 @@ import warnings
 import numpy as np
 from scipy.stats import norm
 from scipy.optimize import minimize
-from colorama import just_fix_windows_console
+# from colorama import just_fix_windows_console
 
 
 def acq_max(ac, gp, y_max, bounds, random_state, constraint=None, n_warmup=10000, n_iter=10):
