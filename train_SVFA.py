@@ -87,7 +87,7 @@ def main():
     model_num = np.random.randint(0, 1000)
 
 
-    pkl.dump(get_results, open(str(model_num) + '_final_low_utilization.pkl', 'wb'))
+    pkl.dump(get_results, open(str(model_num) + '_final_complete_parallel.pkl', 'wb'))
 
 
 if __name__ == "__main__":
