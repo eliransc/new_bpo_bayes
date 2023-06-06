@@ -34,6 +34,11 @@ def main():
 
     # Bounded region of parameter space
 
+    sys_list =['low_utilizatio', 'high_utilization', 'slow_server', 'down_stream', 'n_system', 'parallel', 'complete', 'complete_reversed', 'complete_parallel']
+
+    sys_str = sys_list[np.random.randint(9)]
+
+
     pbounds = {'a1': (0.15, 20),
                'a2': (0.15, 20),
                'a3': (0.15, 20),
@@ -65,7 +70,7 @@ def main():
     print(len(vals))
 
 
-    pkl.dump(vals, open(r'high_utilization'+str(num)+'.pkl', 'wb'))
+    pkl.dump(vals, open(r'slow_server'+str(num)+'.pkl', 'wb'))
 
 
 
