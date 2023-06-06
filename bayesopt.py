@@ -1,4 +1,5 @@
 import time
+from bayes_opt import BayesianOptimization
 # from bayesian_optimization import BayesianOptimization
 # Supress NaN warnings
 import warnings
@@ -50,8 +51,8 @@ def main():
         allow_duplicate_points=True,  # verbose = 1 prints only when a maximum is observed, verbose = 0 is silent
     )
 
-    if os.path.exists("./low_utilization.json"):
-        load_logs(optimizer, logs=["./low_utilization.json"]);
+    if os.path.exists("./complete_parallel.json"):
+        load_logs(optimizer, logs=["./complete_parallel.json"]);
 
     optimizer.maximize(
         init_points=1,
@@ -61,19 +62,19 @@ def main():
     vals = [res for i, res in enumerate(optimizer.res)]
     print(len(vals))
 
-    logger = JSONLogger(path="./low_utilization.json")
+    logger = JSONLogger(path="./complete_parallel.json")
     optimizer.subscribe(Events.OPTIMIZATION_STEP, logger)
 
     optimizer.maximize(
         init_points=0,
-        n_iter=50,
+        n_iter=20,
     )
 
     vals = [res for i, res in enumerate(optimizer.res)]
     print(len(vals))
 
 
-    pkl.dump(vals, open(r'low_utilization.pkl', 'wb'))
+    pkl.dump(vals, open(r'complete_parallel.pkl', 'wb'))
 
 
 
