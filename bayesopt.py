@@ -52,7 +52,7 @@ def main():
     )
 
     if os.path.exists("./complete_parallel.json"):
-        load_logs(optimizer, logs=["./complete_parallel.json"]);
+        load_logs(optimizer, logs=["./high_utilization.json"]);
 
     optimizer.maximize(
         init_points=1,
@@ -62,19 +62,21 @@ def main():
     vals = [res for i, res in enumerate(optimizer.res)]
     print(len(vals))
 
-    logger = JSONLogger(path="./complete_parallel.json")
+    logger = JSONLogger(path="./high_utilization.json")
     optimizer.subscribe(Events.OPTIMIZATION_STEP, logger)
 
     optimizer.maximize(
         init_points=0,
         n_iter=20,
     )
-
+    
+    num = np.random.randint(1,100000000)
+    
     vals = [res for i, res in enumerate(optimizer.res)]
     print(len(vals))
 
 
-    pkl.dump(vals, open(r'complete_parallel.pkl', 'wb'))
+    pkl.dump(vals, open(r'high_utilization_'+str(num)+'.pkl', 'wb'))
 
 
 
