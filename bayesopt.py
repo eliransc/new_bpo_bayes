@@ -65,7 +65,7 @@ def main():
     print(len(vals))
 
 
-    pkl.dump(vals, open(r'low_utilization'+str(num)+'.pkl', 'wb'))
+    pkl.dump(vals, open(r'high_utilization'+str(num)+'.pkl', 'wb'))
 
 
 

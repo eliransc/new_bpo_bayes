@@ -13,7 +13,7 @@ import pickle as pkl
 # -Get the total_reward
 def simulate_competition(A):
 
-    simulator_fake = Simulator(running_time, ShortestProcessingTime(), config_type='low_utilization', reward_function='AUC')
+    simulator_fake = Simulator(running_time, ShortestProcessingTime(), config_type='high_utilization', reward_function='AUC')
     a1 = A[0]
     a2 = A[1]
     a3 = A[2]
@@ -26,7 +26,7 @@ def simulate_competition(A):
     # planner1 = ShortestProcessingTime()
 
     # The config types dictates the system
-    simulator = Simulator(running_time, planner, config_type='low_utilization', reward_function='AUC')
+    simulator = Simulator(running_time, planner, config_type='high_utilization', reward_function='AUC')
     # You can access some proporties from the simulation:
     # simulator.resource_pools: for each tasks 1) the resources that can process it and 2) the mean and variance of the processing time of that assignment
     # simulator.mean_interarrival_time
