@@ -51,7 +51,7 @@ def main():
         allow_duplicate_points=True,  # verbose = 1 prints only when a maximum is observed, verbose = 0 is silent
     )
 
-    if os.path.exists("./complete_parallel.json"):
+    if os.path.exists("./high_utilization.json"):
         load_logs(optimizer, logs=["./high_utilization.json"]);
 
     optimizer.maximize(
