@@ -70,7 +70,7 @@ def main():
     print(len(vals))
 
 
-    pkl.dump(vals, open(r'parallel'+str(num)+'.pkl', 'wb'))
+    pkl.dump(vals, open(r'complete'+str(num)+'.pkl', 'wb'))
 
 
 
