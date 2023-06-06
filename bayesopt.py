@@ -51,8 +51,8 @@ def main():
         allow_duplicate_points=True,  # verbose = 1 prints only when a maximum is observed, verbose = 0 is silent
     )
 
-    if os.path.exists("./high_utilization.json"):
-        load_logs(optimizer, logs=["./high_utilization.json"]);
+    if os.path.exists("./slow_server.json"):
+        load_logs(optimizer, logs=["./slow_server.json"]);
 
     optimizer.maximize(
         init_points=1,
@@ -62,7 +62,7 @@ def main():
     vals = [res for i, res in enumerate(optimizer.res)]
     print(len(vals))
 
-    logger = JSONLogger(path="./high_utilization.json")
+    logger = JSONLogger(path="./slow_server.json")
     optimizer.subscribe(Events.OPTIMIZATION_STEP, logger)
 
     optimizer.maximize(
@@ -76,7 +76,7 @@ def main():
     print(len(vals))
 
 
-    pkl.dump(vals, open(r'high_utilization_'+str(num)+'.pkl', 'wb'))
+    pkl.dump(vals, open(r'slow_server'+str(num)+'.pkl', 'wb'))
 
 
 
