@@ -70,7 +70,7 @@ def main():
     print(len(vals))
 
 
-    pkl.dump(vals, open(r'slow_server'+str(num)+'.pkl', 'wb'))
+    pkl.dump(vals, open(r'down_stream'+str(num)+'.pkl', 'wb'))
 
 
 
