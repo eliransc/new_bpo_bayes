@@ -47,12 +47,16 @@ def main():
                'a6': (0.15, 20),
                'a7': (0.15, 20)}
 
+    import datetime
+
+    now = datetime.datetime.now()
+    rand_state = now.microsecond
 
     optimizer = BayesianOptimization(
         f=aggregate_sims,
         pbounds=pbounds,
         verbose=2,
-        random_state=10,
+        random_state=rand_state,
         allow_duplicate_points=True,  # verbose = 1 prints only when a maximum is observed, verbose = 0 is silent
     )
 
