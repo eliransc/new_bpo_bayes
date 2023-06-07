@@ -39,13 +39,13 @@ def main():
     sys_str = sys_list[np.random.randint(9)]
 
 
-    pbounds = {'a1': (0.15, 20),
-               'a2': (0.15, 20),
-               'a3': (0.15, 20),
-               'a4': (0.15, 20),
-               'a5': (0.15, 20),
-               'a6': (0.15, 20),
-               'a7': (0.15, 20)}
+    pbounds = {'a1': (0.015, 20),
+               'a2': (0.015, 20),
+               'a3': (0.015, 20),
+               'a4': (0.015, 20),
+               'a5': (0.015, 20),
+               'a6': (0.015, 20),
+               'a7': (10, 40)}
 
     import datetime
 
@@ -74,7 +74,7 @@ def main():
     print(len(vals))
 
 
-    pkl.dump(vals, open(r'complete_parallel'+str(num)+'.pkl', 'wb'))
+    pkl.dump(vals, open(r'n_system'+str(num)+'.pkl', 'wb'))
 
 
 
