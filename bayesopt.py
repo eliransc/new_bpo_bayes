@@ -74,7 +74,7 @@ def main():
     print(len(vals))
 
 
-    pkl.dump(vals, open(r'n_system'+str(num)+'.pkl', 'wb'))
+    pkl.dump(vals, open(r'parallel'+str(num)+'.pkl', 'wb'))
 
 
 
