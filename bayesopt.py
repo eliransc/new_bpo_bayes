@@ -45,7 +45,7 @@ def main():
                'a4': (0.015, 20),
                'a5': (0.015, 20),
                'a6': (0.015, 20),
-               'a7': (10, 40)}
+               'a7': (5, 30)}
 
     import datetime
 
@@ -74,7 +74,7 @@ def main():
     print(len(vals))
 
 
-    pkl.dump(vals, open(r'complete_parallel'+str(num)+'.pkl', 'wb'))
+    pkl.dump(vals, open(r'low_utilization'+str(num)+'.pkl', 'wb'))
 
 
 
