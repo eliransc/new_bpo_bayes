@@ -58,7 +58,7 @@ def aggregate_sims(a1, a2, a3, a4, a5, a6, a7):
         # print(res)
         tot_res.append(res)
 
-    pkl.dump((a1, a2, a3, a4, a5, a6, a7, tot_res), open('single_bayes_' + 'low_utilization' + str(model_num) + '.pkl', 'wb'))
+    pkl.dump((a1, a2, a3, a4, a5, a6, a7, tot_res), open('single_bayes_' + 'complete_reversed' + str(model_num) + '.pkl', 'wb'))
 
     return -np.array(tot_res).mean()
 
