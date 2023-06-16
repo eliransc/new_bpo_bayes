@@ -97,7 +97,6 @@ class Bayes_planner(Planner):
             resourse_ranking_dict[res] = res_ranking
 
 
-
         resource_ranking_dict_score = {}
 
         for key in resourse_ranking_dict.keys():

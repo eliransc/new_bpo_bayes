@@ -58,7 +58,7 @@ def aggregate_sims(A): # a1, a2, a3, a4, a5, a6, a7
         # print(res)
         tot_res.append(res)
 
-        pkl.dump((A, tot_res), open('high_utilization_'+ str(ind) + '_' + str(model_num) + '.pkl', 'wb'))
+    pkl.dump((A, tot_res), open('high_utilization_' + str(model_num) + '.pkl', 'wb'))
 
     return -np.array(tot_res).mean()
 
