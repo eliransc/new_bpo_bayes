@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="ef435f94-4756-4b22-b37a-306425c00ff8" name="Changes" comment="first commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/planners.py" beforeDir="false" afterPath="$PROJECT_DIR$/planners.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/train_SVFA.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_SVFA.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -407,7 +405,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686911401196</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="first commit">
+      <created>1686918443233</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1686918443233</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
