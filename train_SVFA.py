@@ -46,7 +46,7 @@ def simulate_competition(A):
 
 def aggregate_sims(A): # a1, a2, a3, a4, a5, a6, a7
     import time
-    
+
     cur_time = int(time.time())
     seed = cur_time + np.random.randint(1, 1000)  # + len(os.listdir(data_path)) +
     np.random.seed(seed)
@@ -58,7 +58,7 @@ def aggregate_sims(A): # a1, a2, a3, a4, a5, a6, a7
         # print(res)
         tot_res.append(res)
 
-        pkl.dump((a1, a2, a3, a4, a5, a6, a7, tot_res), open('high_utilization_'+ str(ind) + '_' + str(model_num) + '.pkl', 'wb'))
+        pkl.dump((A, tot_res), open('high_utilization_'+ str(ind) + '_' + str(model_num) + '.pkl', 'wb'))
 
     return -np.array(tot_res).mean()
 
