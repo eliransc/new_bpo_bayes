@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ef435f94-4756-4b22-b37a-306425c00ff8" name="Changes" comment="first commit">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/train_SVFA.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_SVFA.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -229,20 +230,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1686035023881</updated>
-    </task>
-    <task id="LOCAL-00005" summary="first commit">
-      <created>1686056621725</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1686056621725</updated>
-    </task>
-    <task id="LOCAL-00006" summary="first commit">
-      <created>1686056643239</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1686056643239</updated>
     </task>
     <task id="LOCAL-00007" summary="first commit">
       <created>1686056664495</created>
@@ -573,7 +560,21 @@
       <option name="project" value="LOCAL" />
       <updated>1687097923629</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="first commit">
+      <created>1687098536698</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1687098536698</updated>
+    </task>
+    <task id="LOCAL-00055" summary="first commit">
+      <created>1687098632260</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1687098632261</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

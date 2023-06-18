@@ -44,21 +44,21 @@ def simulate_competition(A):
     return CT_mean
 
 
-def aggregate_sims(a1, a2, a3, a4, a5, a6, a7): # a1, a2, a3, a4, a5, a6, a7
+def aggregate_sims(A): # a1, a2, a3, a4, a5, a6, a7
     import time
-    A = [ a1, a2, a3, a4, a5, a6, a7]
+    # A = [ a1, a2, a3, a4, a5, a6, a7]
     cur_time = int(time.time())
     seed = cur_time + np.random.randint(1, 1000)  # + len(os.listdir(data_path)) +
     np.random.seed(seed)
     model_num = np.random.randint(0, 1000)
     tot_res = []
 
-    for ind in range(50):
+    for ind in range(10):
         res = simulate_competition(A)
         # print(res)
         tot_res.append(res)
 
-    pkl.dump((A, tot_res), open('50_complete_parallel' + str(model_num) + '.pkl', 'wb'))
+    pkl.dump((A, tot_res), open('complete_parallel_optimal_' + str(model_num) + '.pkl', 'wb'))
 
     return -np.array(tot_res).mean()
 
@@ -84,11 +84,17 @@ def main():
 
     complete_reversed = [ 9.234287151531314,  7.95908851847209,  18.216154975967484,  20.396651904627955,  17.310001485766694,  2.083383240956704, 39.471145457108502]
 
-    complete_parallel = [3.58911297e+00, 1.50000000e-02, 1.95585055e+01, 7.30679090e+00, 2.49039860e+00, 1.01250898e+01, 3.45356709e+01]
+    complete_parallel = [3.736149991524543,
+  2.8272743051596576,
+  22.42815830329431,
+  8.581415287506237,
+  22.296310430702498,
+  7.678423005383678,
+  69.5006129500131]
 
    # simulate_competition(A)
 
-    A = complete_reversed
+    A = complete_parallel
 
     get_results = aggregate_sims(A)
 
