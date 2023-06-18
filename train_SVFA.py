@@ -53,12 +53,12 @@ def aggregate_sims(a1, a2, a3, a4, a5, a6, a7): # a1, a2, a3, a4, a5, a6, a7
     model_num = np.random.randint(0, 1000)
     tot_res = []
 
-    for ind in range(10):
+    for ind in range(50):
         res = simulate_competition(A)
         # print(res)
         tot_res.append(res)
 
-    pkl.dump((A, tot_res), open('_complete_parallel' + str(model_num) + '.pkl', 'wb'))
+    pkl.dump((A, tot_res), open('50_complete_parallel' + str(model_num) + '.pkl', 'wb'))
 
     return -np.array(tot_res).mean()
 
