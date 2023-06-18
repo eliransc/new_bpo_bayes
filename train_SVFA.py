@@ -99,7 +99,7 @@ def main():
     model_num = np.random.randint(0, 1000)
 
 
-    pkl.dump(get_results, open(str(model_num) + '_complete_parallel.pkl', 'wb'))
+    pkl.dump(get_results, open(str(model_num) + '_complete.pkl', 'wb'))
 
 
 if __name__ == "__main__":
