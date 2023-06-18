@@ -13,7 +13,7 @@ import pickle as pkl
 # -Get the total_reward
 def simulate_competition(A):
 
-    simulator_fake = Simulator(running_time, ShortestProcessingTime(), config_type='slow', reward_function='AUC')
+    simulator_fake = Simulator(running_time, ShortestProcessingTime(), config_type='complete_parallel', reward_function='AUC')
     a1 = A[0]
     a2 = A[1]
     a3 = A[2]
@@ -26,7 +26,7 @@ def simulate_competition(A):
     # planner1 = ShortestProcessingTime()
 
     # The config types dictates the system
-    simulator = Simulator(running_time, planner, config_type='slow', reward_function='AUC')
+    simulator = Simulator(running_time, planner, config_type='complete_parallel', reward_function='AUC')
     # You can access some proporties from the simulation:
     # simulator.resource_pools: for each tasks 1) the resources that can process it and 2) the mean and variance of the processing time of that assignment
     # simulator.mean_interarrival_time
@@ -58,7 +58,7 @@ def aggregate_sims(A): # a1, a2, a3, a4, a5, a6, a7
         # print(res)
         tot_res.append(res)
 
-    pkl.dump((A, tot_res), open('slow' + str(model_num) + '.pkl', 'wb'))
+    pkl.dump((A, tot_res), open('complete_parallel' + str(model_num) + '.pkl', 'wb'))
 
     return -np.array(tot_res).mean()
 
@@ -71,8 +71,6 @@ def main():
     low_utilization = [0.15, 0.15, 20.0, 0.15, 0.15, 0.15, 20.0]
 
     n_system = [0.015, 0.015, 20.0, 20.0, 6.173545342831394, 0.015, 10.0]
-
-    slow = [5.000000,	3.767883,	0.0,	1.645102,	0.000000,	20.000000]
 
     down_stream = [0.15, 0.15, 20.0, 20.0, 18.911578855212127, 0.15, 20.0]
 
@@ -88,7 +86,7 @@ def main():
 
    # simulate_competition(A)
 
-    A = slow
+    A = complete_parallel
 
     get_results = aggregate_sims(A)
 
@@ -99,7 +97,7 @@ def main():
     model_num = np.random.randint(0, 1000)
 
 
-    pkl.dump(get_results, open(str(model_num) + '_n_system.pkl', 'wb'))
+    pkl.dump(get_results, open(str(model_num) + '_complete_parallel.pkl', 'wb'))
 
 
 if __name__ == "__main__":
