@@ -86,7 +86,7 @@ def main():
 
    # simulate_competition(A)
 
-    A = down_stream
+    A = complete
 
     get_results = aggregate_sims(A)
 
