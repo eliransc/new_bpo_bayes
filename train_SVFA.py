@@ -44,9 +44,9 @@ def simulate_competition(A):
     return CT_mean
 
 
-def aggregate_sims(a1, a2, a3, a4, a5, a6, a7): # a1, a2, a3, a4, a5, a6, a7
+def aggregate_sims(A): # a1, a2, a3, a4, a5, a6, a7
     import time
-    A = [ a1, a2, a3, a4, a5, a6, a7]
+    # A = [ a1, a2, a3, a4, a5, a6, a7]
     cur_time = int(time.time())
     seed = cur_time + np.random.randint(1, 1000)  # + len(os.listdir(data_path)) +
     np.random.seed(seed)
@@ -58,7 +58,7 @@ def aggregate_sims(a1, a2, a3, a4, a5, a6, a7): # a1, a2, a3, a4, a5, a6, a7
         # print(res)
         tot_res.append(res)
 
-    pkl.dump((A, tot_res), open('_complete_reversed' + str(model_num) + '.pkl', 'wb'))
+    pkl.dump((A, tot_res), open('best_complete_reversed' + str(model_num) + '.pkl', 'wb'))
 
     return -np.array(tot_res).mean()
 
