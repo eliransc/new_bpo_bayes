@@ -13,7 +13,7 @@ import pickle as pkl
 # -Get the total_reward
 def simulate_competition(A):
 
-    simulator_fake = Simulator(running_time, ShortestProcessingTime(), config_type='complete', reward_function='AUC')
+    simulator_fake = Simulator(running_time, ShortestProcessingTime(), config_type='slow_server', reward_function='AUC')
     a1 = A[0]
     a2 = A[1]
     a3 = A[2]
@@ -26,7 +26,7 @@ def simulate_competition(A):
     # planner1 = ShortestProcessingTime()
 
     # The config types dictates the system
-    simulator = Simulator(running_time, planner, config_type='complete', reward_function='AUC')
+    simulator = Simulator(running_time, planner, config_type='slow_server', reward_function='AUC')
     # You can access some proporties from the simulation:
     # simulator.resource_pools: for each tasks 1) the resources that can process it and 2) the mean and variance of the processing time of that assignment
     # simulator.mean_interarrival_time
@@ -44,9 +44,9 @@ def simulate_competition(A):
     return CT_mean
 
 
-def aggregate_sims( a1, a2, a3, a4, a5, a6, a7): # a1, a2, a3, a4, a5, a6, a7
+def aggregate_sims( A): # a1, a2, a3, a4, a5, a6, a7
     import time
-    A = [ a1, a2, a3, a4, a5, a6, a7]
+    # A = [ a1, a2, a3, a4, a5, a6, a7]
     cur_time = int(time.time())
     seed = cur_time + np.random.randint(1, 1000)  # + len(os.listdir(data_path)) +
     np.random.seed(seed)
@@ -58,9 +58,9 @@ def aggregate_sims( a1, a2, a3, a4, a5, a6, a7): # a1, a2, a3, a4, a5, a6, a7
         # print(res)
         tot_res.append(res)
 
-    pkl.dump((A, tot_res), open('single_bayes_complete' + str(model_num) + '.pkl', 'wb'))
+    pkl.dump((A, tot_res), open('slow_server' + str(model_num) + '.pkl', 'wb'))
 
-    return -np.array(tot_res).mean()
+    return (-np.array(tot_res).mean(), tot_res)
 
  # open('single_bayes_' + 'high_utilization' + str(model_num) + '.pkl', 'wb'))
 
@@ -86,7 +86,7 @@ def main():
 
    # simulate_competition(A)
 
-    A = complete_reversed
+    A = slow_server
 
     get_results = aggregate_sims(A)
 
@@ -97,7 +97,7 @@ def main():
     model_num = np.random.randint(0, 1000)
 
 
-    pkl.dump(get_results, open(str(model_num) + '_complete_reversed.pkl', 'wb'))
+    pkl.dump(get_results, open(str(model_num) + '_slow_server.pkl', 'wb'))
 
 
 if __name__ == "__main__":
