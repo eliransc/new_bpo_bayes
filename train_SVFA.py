@@ -13,7 +13,7 @@ import pickle as pkl
 # -Get the total_reward
 def simulate_competition(A):
 
-    simulator_fake = Simulator(running_time, ShortestProcessingTime(), config_type='slow_server', reward_function='AUC')
+    simulator_fake = Simulator(running_time, ShortestProcessingTime(), config_type='complete', reward_function='AUC')
     a1 = A[0]
     a2 = A[1]
     a3 = A[2]
@@ -26,7 +26,7 @@ def simulate_competition(A):
     # planner1 = ShortestProcessingTime()
 
     # The config types dictates the system
-    simulator = Simulator(running_time, planner, config_type='slow_server', reward_function='AUC')
+    simulator = Simulator(running_time, planner, config_type='complete', reward_function='AUC')
     # You can access some proporties from the simulation:
     # simulator.resource_pools: for each tasks 1) the resources that can process it and 2) the mean and variance of the processing time of that assignment
     # simulator.mean_interarrival_time
@@ -44,9 +44,9 @@ def simulate_competition(A):
     return CT_mean
 
 
-def aggregate_sims(A): # a1, a2, a3, a4, a5, a6, a7
+def aggregate_sims(a1, a2, a3, a4, a5, a6, a7): # a1, a2, a3, a4, a5, a6, a7
     import time
-    # A = [ a1, a2, a3, a4, a5, a6, a7]
+    A = [ a1, a2, a3, a4, a5, a6, a7]
     cur_time = int(time.time())
     seed = cur_time + np.random.randint(1, 1000)  # + len(os.listdir(data_path)) +
     np.random.seed(seed)
@@ -58,7 +58,7 @@ def aggregate_sims(A): # a1, a2, a3, a4, a5, a6, a7
         # print(res)
         tot_res.append(res)
 
-    pkl.dump((A, tot_res), open('slow_server' + str(model_num) + '.pkl', 'wb'))
+    pkl.dump((A, tot_res), open('_complete' + str(model_num) + '.pkl', 'wb'))
 
     return -np.array(tot_res).mean()
 
@@ -74,7 +74,8 @@ def main():
 
     down_stream = [0.15, 0.15, 20.0, 20.0, 18.911578855212127, 0.15, 20.0]
 
-    complete = [3.5891129717483348, 0.015, 19.558505455930856, 7.3067908967685895, 2.4903986035491594, 10.125089778688992, 34.53567091112935]
+    # 3.5891129717483348, 0.015, 19.558505455930856, 7.3067908967685895, 2.4903986035491594, 10.125089778688992, 34.53567091112935
+    complete = [0.09154961927740712, 2.912387229431585, 14.451013276379312, 29.36395671453757, 13.177016753562167, 12.861960177623466, 29.214770307928994]
 
     # 0.15, 7.96025975421663, 10.22775090867394, 20.0, 4.257145518125576, 0.15, 20.0
     slow_server = [0.015, 1.2484516706551265, 23.408393726166587, 25.290958991232003, 16.414990721120084, 5.583758355596822, 22.065706736839584]
@@ -87,7 +88,7 @@ def main():
 
    # simulate_competition(A)
 
-    A = slow_server
+    A = complete
 
     get_results = aggregate_sims(A)
 
