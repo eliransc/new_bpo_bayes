@@ -13,7 +13,7 @@ import pickle as pkl
 # -Get the total_reward
 def simulate_competition(A):
 
-    simulator_fake = Simulator(running_time, ShortestProcessingTime(), config_type='complete', reward_function='AUC')
+    simulator_fake = Simulator(running_time, ShortestProcessingTime(), config_type='complete_reversed', reward_function='AUC')
     a1 = A[0]
     a2 = A[1]
     a3 = A[2]
@@ -26,7 +26,7 @@ def simulate_competition(A):
     # planner1 = ShortestProcessingTime()
 
     # The config types dictates the system
-    simulator = Simulator(running_time, planner, config_type='complete', reward_function='AUC')
+    simulator = Simulator(running_time, planner, config_type='complete_reversed', reward_function='AUC')
     # You can access some proporties from the simulation:
     # simulator.resource_pools: for each tasks 1) the resources that can process it and 2) the mean and variance of the processing time of that assignment
     # simulator.mean_interarrival_time
@@ -58,7 +58,7 @@ def aggregate_sims(A): # a1, a2, a3, a4, a5, a6, a7
         # print(res)
         tot_res.append(res)
 
-    pkl.dump((A, tot_res), open('complete_optimal_' + str(model_num) + '.pkl', 'wb'))
+    pkl.dump((A, tot_res), open('complete_reversed_optimal_' + str(model_num) + '.pkl', 'wb'))
 
     return -np.array(tot_res).mean()
 
@@ -82,7 +82,13 @@ def main():
 
     parallel = [0.15, 0.15, 20.0, 20.0, 20.0, 0.15, 8.28753107297809]
 
-    complete_reversed = [ 9.234287151531314,  7.95908851847209,  18.216154975967484,  20.396651904627955,  17.310001485766694,  2.083383240956704, 39.471145457108502]
+    complete_reversed = [ 14.655329405050026,
+  2.2307821329123763,
+  23.908040064026785,
+  28.307739945329566,
+  5.806455816634357,
+  9.71514967582145,
+  86.76148258110027]
 
     complete_parallel = [3.736149991524543,
   2.8272743051596576,
@@ -105,7 +111,7 @@ def main():
     model_num = np.random.randint(0, 1000)
 
 
-    pkl.dump(get_results, open(str(model_num) + '_complete.pkl', 'wb'))
+    pkl.dump(get_results, open(str(model_num) + '_complete_reversed.pkl', 'wb'))
 
 
 if __name__ == "__main__":
