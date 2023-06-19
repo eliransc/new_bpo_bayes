@@ -13,7 +13,7 @@ import pickle as pkl
 # -Get the total_reward
 def simulate_competition(A):
 
-    simulator_fake = Simulator(running_time, ShortestProcessingTime(), config_type='complete', reward_function='AUC')
+    simulator_fake = Simulator(running_time, ShortestProcessingTime(), config_type='complete_parallel', reward_function='AUC')
     a1 = A[0]
     a2 = A[1]
     a3 = A[2]
@@ -26,7 +26,7 @@ def simulate_competition(A):
     # planner1 = ShortestProcessingTime()
 
     # The config types dictates the system
-    simulator = Simulator(running_time, planner, config_type='complete', reward_function='AUC')
+    simulator = Simulator(running_time, planner, config_type='complete_parallel', reward_function='AUC')
     # You can access some proporties from the simulation:
     # simulator.resource_pools: for each tasks 1) the resources that can process it and 2) the mean and variance of the processing time of that assignment
     # simulator.mean_interarrival_time
@@ -57,7 +57,7 @@ def aggregate_sims(a1, a2, a3, a4, a5, a6, a7):
         res = simulate_competition(A)
         print(res)
         tot_res.append(res)
-        pkl.dump(tot_res, open('opt6_complete_' + str(model_num) + '.pkl', 'wb'))
+        pkl.dump(tot_res, open('opt7_complete_parallel' + str(model_num) + '.pkl', 'wb'))
 
     print(res)
     return -np.array(tot_res).mean()
@@ -80,13 +80,7 @@ def main():
 
     # simulate_competition(A)
 
-    get_results = aggregate_sims(0.09154961927740712,
-  2.912387229431585,
-  14.451013276379312,
-  29.36395671453757,
-  13.177016753562167,
-  12.861960177623466,
-  29.214770307928994)
+    get_results = aggregate_sims(15.42641286533492, 0.41503898718803, 12.672964698525508, 14.976077650772236, 9.970140246051809, 4.495932910616953, 59.9031432379812)
 
     import time
     cur_time = int(time.time())
