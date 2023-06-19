@@ -21,7 +21,7 @@ def simulate_competition(A):
     a5 = A[4]
     a6 = A[5]
     a7 = A[6]
-    # print(a1, a2, a3, a4, a5, a6, a7)
+    print(a1, a2, a3, a4, a5, a6, a7)
     planner = Bayes_planner(a1, a2, a3, a4, a5, a6,a7,simulator_fake)  # ShortestProcessingTime() # Insert your planner here, input can be the parameters of your model
     # planner1 = ShortestProcessingTime()
 
@@ -39,14 +39,14 @@ def simulate_competition(A):
     # You should want to optimize the total_reward, this is related to the mean cycle time, however the total reward also includes uncompleted casese
     # Total reward = total cycle time
     nr_uncompleted_cases, total_reward, CT_mean, CT_std, = simulator.run()
-    # print('stop')
+    print('stop')
 
     return CT_mean
 
 
-def aggregate_sims(A): # a1, a2, a3, a4, a5, a6, a7
+def aggregate_sims(a1, a2, a3, a4, a5, a6, a7):
     import time
-    # A = [ a1, a2, a3, a4, a5, a6, a7]
+    A = np.array([a1, a2, a3, a4, a5, a6, a7])
     cur_time = int(time.time())
     seed = cur_time + np.random.randint(1, 1000)  # + len(os.listdir(data_path)) +
     np.random.seed(seed)
@@ -55,54 +55,32 @@ def aggregate_sims(A): # a1, a2, a3, a4, a5, a6, a7
 
     for ind in range(1):
         res = simulate_competition(A)
-        # print(res)
+        print(res)
         tot_res.append(res)
+        pkl.dump(tot_res, open('opt3_complete_' + str(model_num) + '.pkl', 'wb'))
 
-    pkl.dump((A, tot_res), open('complete_opt2_' + str(model_num) + '.pkl', 'wb'))
-
+    print(res)
     return -np.array(tot_res).mean()
 
- # open('single_bayes_' + 'high_utilization' + str(model_num) + '.pkl', 'wb'))
 
 def main():
 
-    high_utilization = [0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 4.620278449742129]
+    # high_utilization = [1.321091, 4.556206,  0.790609,0.000000, 3.051695,    15.739693]
 
-    low_utilization = [0.15, 0.15, 20.0, 0.15, 0.15, 0.15, 20.0]
+    #low_utilization = [1.209298, 4.898732,	0.496618, 2.658753,	2.234656,12.339795]
 
-    n_system = [0.015, 0.015, 20.0, 20.0, 6.173545342831394, 0.015, 10.0]
+    # n_system = [0.000000,	5.000000,	1.584558,	0.000000,	0.000000	, 7.0]
+    #slow = [5.000000,	3.767883,	0.0,	1.645102,	0.000000,	20.000000]
 
-    down_stream = [0.15, 0.15, 20.0, 20.0, 18.911578855212127, 0.15, 20.0]
+    #down_stream = [1.655077, 4.013198,0.491260, 0.279967, 2.213313, 7.287871]
 
-    complete=[ 3.5891129717483348, 0.015, 19.558505455930856, 7.3067908967685895, 2.4903986035491594, 10.125089778688992, 34.53567091112935]
-    # complete = [0.09154961927740712, 2.912387229431585, 14.451013276379312, 29.36395671453757, 13.177016753562167, 12.861960177623466, 29.214770307928994]
+    # complete_all = [0.337376	4.110818	1.167821	0.862430	0.474204	19.111311]
 
-    # 0.15, 7.96025975421663, 10.22775090867394, 20.0, 4.257145518125576, 0.15, 20.0
-    slow_server = [0.015, 1.2484516706551265, 23.408393726166587, 25.290958991232003, 16.414990721120084, 5.583758355596822, 22.065706736839584]
+    complete = [15.42641286533492, 0.41503898718803, 12.672964698525508, 14.976077650772236, 9.970140246051809, 4.495932910616953, 59.9031432379812]
 
-    parallel = [0.15, 0.15, 20.0, 20.0, 20.0, 0.15, 8.28753107297809]
+    # simulate_competition(A)
 
-    complete_reversed = [ 14.655329405050026,
-  2.2307821329123763,
-  23.908040064026785,
-  28.307739945329566,
-  5.806455816634357,
-  9.71514967582145,
-  86.76148258110027]
-
-    complete_parallel = [3.736149991524543,
-  2.8272743051596576,
-  22.42815830329431,
-  8.581415287506237,
-  22.296310430702498,
-  7.678423005383678,
-  69.5006129500131]
-
-   # simulate_competition(A)
-
-    A = complete
-
-    get_results = aggregate_sims(A)
+    get_results = aggregate_sims(15.42641286533492, 0.41503898718803, 12.672964698525508, 14.976077650772236, 9.970140246051809, 4.495932910616953, 59.9031432379812)
 
     import time
     cur_time = int(time.time())
@@ -111,7 +89,7 @@ def main():
     model_num = np.random.randint(0, 1000)
 
 
-    pkl.dump(get_results, open(str(model_num) + '_complete_reversed.pkl', 'wb'))
+    pkl.dump(get_results, open(str(model_num) + '_final_slow_server.pkl', 'wb'))
 
 
 if __name__ == "__main__":

@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ef435f94-4756-4b22-b37a-306425c00ff8" name="Changes" comment="first commit">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/train_SVFA.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_SVFA.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -229,13 +230,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1686035023881</updated>
-    </task>
-    <task id="LOCAL-00011" summary="first commit">
-      <created>1686061060792</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1686061060792</updated>
     </task>
     <task id="LOCAL-00012" summary="first commit">
       <created>1686068343522</created>
@@ -573,7 +567,14 @@
       <option name="project" value="LOCAL" />
       <updated>1687152651586</updated>
     </task>
-    <option name="localTasksCounter" value="60" />
+    <task id="LOCAL-00060" summary="first commit">
+      <created>1687152916783</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1687152916783</updated>
+    </task>
+    <option name="localTasksCounter" value="61" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
