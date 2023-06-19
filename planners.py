@@ -29,7 +29,7 @@ class Bayes_planner(Planner):
     def __str__(self) -> str:
         return 'Bayesian'
 
-    def __init__(self, a1, a2, a3, a4, a5, a6, a7,simulator1):
+    def __init__(self, a1, a2, a3, a4, a5, a6, a7, simulator1):
 
         self.a1 = a1
         self.a2 = a2
@@ -57,7 +57,6 @@ class Bayes_planner(Planner):
         res_list = [col for col in list(df.columns) if 'Resource' in col]
         for task in Tasks_names:
 
-
             curr_df = pd.DataFrame([])
             for ind, res in enumerate(res_list):
                 curr_df.loc[ind, 'Resource'] = res
@@ -78,14 +77,11 @@ class Bayes_planner(Planner):
 
             task_ranking_dict[task] = task_ranking
 
-
-
         resourse_ranking_dict = {}
 
         # res_names = ['Resource 1', 'Resource 2']
 
         for res in res_list:
-
             num_none_nan = np.sum(df.sort_values(by=[res])[res] > 0)
             res_ranking = list(df.sort_values(by=[res])['task'][:num_none_nan])
 
@@ -95,7 +91,6 @@ class Bayes_planner(Planner):
             #     res_ranking = ['Task B', 'Task A']
 
             resourse_ranking_dict[res] = res_ranking
-
 
         resource_ranking_dict_score = {}
 
@@ -141,7 +136,6 @@ class Bayes_planner(Planner):
                     possible_assignments.append((resource, task))
         return list(set(possible_assignments))
 
-
     def plan(self, available_tasks, available_resources, resource_pools):
 
         available_resources = available_resources.copy()
@@ -162,17 +156,17 @@ class Bayes_planner(Planner):
                 task = assignment[1]
 
                 mean_val = self.df.loc[self.df['task'] == task.task_type, resource].item()
-                var_val = (self.df.loc[self.df['task'] == task.task_type, resource].item())**2
+                var_val = self.df.loc[self.df['task'] == task.task_type, resource].item() ** 2
                 prob_fin = self.df.loc[self.df['task'] == task.task_type, 'prob_finish'].item()
                 if task.task_type in queue_len_keys:
                     queue_lenght = queue_lens[task.task_type]
                 else:
                     queue_lenght = 0
 
-                score = self.a1 * mean_val+self.a2 * var_val - self.a3 * prob_fin - self.a4 * queue_lenght\
-                        + self.a5*self.resource_ranking_dict_score[(resource, task.task_type)]+self.a6*self.task_ranking_dict_score[(task.task_type, resource)]
+                score = self.a1 * mean_val + self.a2 * var_val - self.a3 * prob_fin - self.a4 * queue_lenght \
+                        + self.a5 * self.resource_ranking_dict_score[(resource, task.task_type)] + self.a6 * \
+                        self.task_ranking_dict_score[(task.task_type, resource)]
                 curr_ind = df_scores.shape[0]
-
 
                 df_scores.loc[curr_ind, 'task_type'] = task.task_type
                 df_scores.loc[curr_ind, 'task'] = task
@@ -185,18 +179,18 @@ class Bayes_planner(Planner):
                 available_resources.remove(df_scores.loc[0, 'resource'])
                 available_tasks.remove(df_scores.loc[0, 'task'])
                 assignments.append((df_scores.loc[0, 'resource'], df_scores.loc[0, 'task']))
-                possible_assignments = self.get_possible_assignments(available_tasks, available_resources, resource_pools)
+                possible_assignments = self.get_possible_assignments(available_tasks, available_resources,
+                                                                     resource_pools)
             else:
                 break
 
-
         return assignments
-
 
 
 # Greedy assignment
 class GreedyPlanner(Planner):
     """A :class:`.Planner` that assigns tasks to resources in an anything-goes manner."""
+
     def __str__(self) -> str:
         return 'GreedyPlanner'
 
@@ -212,14 +206,12 @@ class GreedyPlanner(Planner):
         return assignments
 
 
-
-
 class ShortestProcessingTime(Planner):
     def __str__(self) -> str:
         return 'ShortestProcessingTime'
 
-    def __init__(self):        
-        self.resource_pools = None # passed through simulator
+    def __init__(self):
+        self.resource_pools = None  # passed through simulator
 
     def get_possible_assignments(self, available_tasks, available_resources, resource_pools):
         possible_assignments = []
@@ -228,35 +220,36 @@ class ShortestProcessingTime(Planner):
                 if resource in resource_pools[task_type]:
                     possible_assignments.append((resource, task_type))
         return list(set(possible_assignments))
-    
+
     def plan(self, available_tasks, available_resources, resource_pools):
         available_tasks = available_tasks.copy()
-        available_resources = available_resources.copy()        
+        available_resources = available_resources.copy()
         assignments = []
 
         possible_assignments = self.get_possible_assignments(available_tasks, available_resources, resource_pools)
-        while len(possible_assignments) > 0:            
+        while len(possible_assignments) > 0:
             spt = 999999
-            for assignment in possible_assignments: #assignment[0] = task, assignment[1]= resource
+            for assignment in possible_assignments:  # assignment[0] = task, assignment[1]= resource
                 processing_time = self.resource_pools[assignment[1]][assignment[0]][0]
                 if processing_time < spt:
                     spt = processing_time
                     best_assignment = assignment
 
-            assignment = (best_assignment[0], (next((x for x in available_tasks if x.task_type == best_assignment[1]), None)))
+            assignment = (
+            best_assignment[0], (next((x for x in available_tasks if x.task_type == best_assignment[1]), None)))
             available_tasks.remove(assignment[1])
             available_resources.remove(assignment[0])
             assignments.append(assignment)
             possible_assignments = self.get_possible_assignments(available_tasks, available_resources, resource_pools)
-        return assignments 
+        return assignments
 
 
 class FIFO(Planner):
     def __str__(self) -> str:
         return 'FIFO'
 
-    def __init__(self):        
-        self.resource_pools = None # passed through simulator
+    def __init__(self):
+        self.resource_pools = None  # passed through simulator
         self.task_types = None
 
     def get_possible_assignments(self, available_tasks, available_resources, resource_pools):
@@ -266,24 +259,24 @@ class FIFO(Planner):
                 if resource in resource_pools[task_type]:
                     possible_assignments.append((resource, task_type))
         return list(set(possible_assignments))
-    
+
     def plan(self, available_tasks, available_resources, resource_pools):
         available_tasks = available_tasks.copy()
         available_tasks_sorted = sorted(available_tasks, key=lambda x: x.start_time)
-        available_resources = available_resources.copy()        
+        available_resources = available_resources.copy()
         self.task_types = list(self.resource_pools.keys())
         assignments = []
 
         possible_assignments = self.get_possible_assignments(available_tasks, available_resources, resource_pools)
         while len(possible_assignments) > 0:
-            #print(possible_assignments)
-            #print([task.task_type for task in available_tasks_sorted])
+            # print(possible_assignments)
+            # print([task.task_type for task in available_tasks_sorted])
             for priority_task in available_tasks_sorted:
                 best_assignments = []
                 for possible_assignment in possible_assignments:
                     if possible_assignment[1] == priority_task.task_type:
                         best_assignments.append(possible_assignment)
-                
+
                 if len(best_assignments) > 0:
                     spt = 999999
                     for assignment in best_assignments:
@@ -291,21 +284,21 @@ class FIFO(Planner):
                         if processing_time < spt:
                             best_assignment = assignment
                             spt = processing_time
-                    break    
+                    break
 
-            assignment = (best_assignment[0], (next((x for x in available_tasks if x.task_type == best_assignment[1]), None)))
+            assignment = (
+            best_assignment[0], (next((x for x in available_tasks if x.task_type == best_assignment[1]), None)))
             available_tasks.remove(assignment[1])
-            #print(available_resources, assignment[0], '\n')
+            # print(available_resources, assignment[0], '\n')
             available_resources.remove(assignment[0])
             assignments.append(assignment)
             possible_assignments = self.get_possible_assignments(available_tasks, available_resources, resource_pools)
             available_tasks_sorted = sorted(available_tasks, key=lambda x: x.start_time)
-        return assignments 
-            
+        return assignments
 
         while len(possible_assignments) > 0:
             best_assignments = []
-            for task in available_tasks_sorted: # check if a task_type starting at the end is possible
+            for task in available_tasks_sorted:  # check if a task_type starting at the end is possible
                 for possible_assignment in possible_assignments:
                     if possible_assignment[1] == task.task_type:
                         best_assignments.append(possible_assignment)
@@ -314,19 +307,20 @@ class FIFO(Planner):
                     break
 
             best_assignment = random.choice(best_assignments)
-            assignment = (best_assignment[0], (next((x for x in available_tasks if x.task_type == best_assignment[1]), None)))
+            assignment = (
+            best_assignment[0], (next((x for x in available_tasks if x.task_type == best_assignment[1]), None)))
             available_tasks.remove(assignment[1])
             available_resources.remove(assignment[0])
             assignments.append(assignment)
             possible_assignments = self.get_possible_assignments(available_tasks, available_resources, resource_pools)
-        return assignments 
+        return assignments
 
 
 class Random(Planner):
     def __str__(self) -> str:
         return 'Random'
 
-    def __init__(self):        
+    def __init__(self):
         self.resource_pools = None
         self.task_types = None
 
@@ -337,22 +331,24 @@ class Random(Planner):
                 if resource in resource_pools[task_type]:
                     possible_assignments.append((resource, task_type))
         return list(set(possible_assignments))
-    
+
     def plan(self, available_tasks, available_resources, resource_pools):
         available_tasks = available_tasks.copy()
-        available_resources = available_resources.copy()        
+        available_resources = available_resources.copy()
         self.task_types = list(self.resource_pools.keys())
         assignments = []
 
         possible_assignments = self.get_possible_assignments(available_tasks, available_resources, resource_pools)
         while len(possible_assignments) > 0:
             best_assignment = random.choice(possible_assignments)
-            assignment = (best_assignment[0], (next((x for x in available_tasks if x.task_type == best_assignment[1]), None)))
+            assignment = (
+            best_assignment[0], (next((x for x in available_tasks if x.task_type == best_assignment[1]), None)))
             available_tasks.remove(assignment[1])
             available_resources.remove(assignment[0])
             assignments.append(assignment)
             possible_assignments = self.get_possible_assignments(available_tasks, available_resources, resource_pools)
-        return assignments 
+        return assignments
+
 
 class DedicatedResourcePlanner(Planner):
     """A :class:`.Planner` that assigns tasks to resources in an anything-goes manner."""
@@ -360,7 +356,7 @@ class DedicatedResourcePlanner(Planner):
     def __str__(self) -> str:
         return 'DedicatedResourcePlanner'
 
-    def plan(self, available_tasks, available_resources,resource_pools):
+    def plan(self, available_tasks, available_resources, resource_pools):
         assignments = []
         available_resources = available_resources.copy()
         available_tasks = available_tasks.copy()
@@ -374,7 +370,7 @@ class DedicatedResourcePlanner(Planner):
                 elif 'Resource 2' in available_resources:
                     assignments.append(('Resource 2', task))
                     available_resources.remove('Resource 2')
-                    available_tasks.remove(task)  
+                    available_tasks.remove(task)
         for task in available_tasks:
             if task.task_type == 'Task A':
                 if 'Resource 1' in available_resources:
@@ -391,7 +387,7 @@ class DedicatedResourcePlanner(Planner):
         #         print('wrong 1')
         #     elif assignment[0].task_type == 'Task A' and assignment[1] != 'Resource 2':
         #         print('wrong 2')    
-        
+
         return assignments
 
 
@@ -413,12 +409,12 @@ class PPOPlanner(Planner):
 
         self.simulator = None
 
-    #pass the simulator for bidirectional communication
+    # pass the simulator for bidirectional communication
     def linkSimulator(self, simulator):
         self.simulator = simulator
 
     def define_action_masks(self, state) -> List[bool]:
-        #state = self.simulator.get_state()
+        # state = self.simulator.get_state()
         mask = [0 for _ in range(len(self.simulator.output))]
 
         for task_type in self.simulator.task_types:
@@ -427,46 +423,43 @@ class PPOPlanner(Planner):
                     if state[self.simulator.input.index(resource + '_availability')] > 0:
                         mask[self.simulator.output.index((resource, task_type))] = 1
 
-        mask[-1] = 1 # Set postpone action to 1
+        mask[-1] = 1  # Set postpone action to 1
 
         return list(map(bool, mask))
 
-
-    def take_action(self, action):   
+    def take_action(self, action):
         return self.simulator.output[action]
-
-
 
     def plan(self, available_resources, unassigned_tasks, resource_pool):
         state = self.simulator.get_state()
-        #print(state)
-        #mask = self.define_action_masks(state)        
-        
+        # print(state)
+        # mask = self.define_action_masks(state)        
+
         assignments = []
 
         # PROBLEM: like this, if a resource and a task are available but the net tells to skip the assignment
-        while (sum(self.define_action_masks(state)) > 1): #the do nothing action is always available
+        while (sum(self.define_action_masks(state)) > 1):  # the do nothing action is always available
             state = self.simulator.get_state()
             mask = self.define_action_masks(state)
 
             action, _states = self.model.predict(state, action_masks=mask)
             assignment = self.simulator.output[action]
-            #task, resource = self.take_action(action)
-            #print(action)
+            # task, resource = self.take_action(action)
+            # print(action)
 
-            if assignment != 'Postpone': # Not postpone
-                #print(f"AVAILABLE RESOURCES: {available_resources}")
-                #print(f"UNASSIGNED TASKS: {unassigned_tasks}")
-                #print(f"NUMBER OF POSSIBLE ASSIGNMENTS: {sum(self.getActionMasks(self.getState(available_resources, unassigned_tasks, busy_resources))) - 1}")
-                assignment = (assignment[0], (next((x for x in self.simulator.available_tasks if x.task_type == assignment[1]), None)))
-                #print(assignment)
+            if assignment != 'Postpone':  # Not postpone
+                # print(f"AVAILABLE RESOURCES: {available_resources}")
+                # print(f"UNASSIGNED TASKS: {unassigned_tasks}")
+                # print(f"NUMBER OF POSSIBLE ASSIGNMENTS: {sum(self.getActionMasks(self.getState(available_resources, unassigned_tasks, busy_resources))) - 1}")
+                assignment = (assignment[0],
+                              (next((x for x in self.simulator.available_tasks if x.task_type == assignment[1]), None)))
+                # print(assignment)
                 self.simulator.process_assignment(assignment)
             else:
-                break # return to simulator
+                break  # return to simulator
         return []
-        #print(f"ASSIGNMENTS: {assignments}")
-        #return assignments
-        
+        # print(f"ASSIGNMENTS: {assignments}")
+        # return assignments
 
     def report(self, event):
-        pass#print(event)
+        pass  # print(event)
