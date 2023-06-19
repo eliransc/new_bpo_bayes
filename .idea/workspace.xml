@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ef435f94-4756-4b22-b37a-306425c00ff8" name="Changes" comment="first commit">
-      <change beforePath="$PROJECT_DIR$/config.txt" beforeDir="false" afterPath="$PROJECT_DIR$/config.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/planners.py" beforeDir="false" afterPath="$PROJECT_DIR$/planners.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/simulator.py" beforeDir="false" afterPath="$PROJECT_DIR$/simulator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/train_SVFA.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_SVFA.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -231,20 +230,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1686035023881</updated>
-    </task>
-    <task id="LOCAL-00013" summary="first commit">
-      <created>1686162172894</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1686162172894</updated>
-    </task>
-    <task id="LOCAL-00014" summary="first commit">
-      <created>1686162336444</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1686162336444</updated>
     </task>
     <task id="LOCAL-00015" summary="first commit">
       <created>1686162700728</created>
@@ -575,7 +560,21 @@
       <option name="project" value="LOCAL" />
       <updated>1687158942193</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="first commit">
+      <created>1687159567847</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1687159567847</updated>
+    </task>
+    <task id="LOCAL-00063" summary="first commit">
+      <created>1687159659954</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1687159659954</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

@@ -57,7 +57,7 @@ def aggregate_sims(a1, a2, a3, a4, a5, a6, a7):
         res = simulate_competition(A)
         print(res)
         tot_res.append(res)
-        pkl.dump(tot_res, open('opt4_complete_' + str(model_num) + '.pkl', 'wb'))
+        pkl.dump(tot_res, open('opt5_complete_' + str(model_num) + '.pkl', 'wb'))
 
     print(res)
     return -np.array(tot_res).mean()
@@ -80,7 +80,7 @@ def main():
 
     # simulate_competition(A)
 
-    get_results = aggregate_sims(15.42641286533492, 0.41503898718803, 12.672964698525508, 14.976077650772236, 9.970140246051809, 4.495932910616953, 59.9031432379812)
+    get_results = aggregate_sims(15.210614243979174, 3.382216731250709, 1.7667962834802053, 13.707196367355944, 19.06786692389873, 0.07896532655828903, 75.60961316928883)
 
     import time
     cur_time = int(time.time())
