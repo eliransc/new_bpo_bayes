@@ -57,7 +57,7 @@ def aggregate_sims(a1, a2, a3, a4, a5, a6, a7):
         res = simulate_competition(A)
         print(res)
         tot_res.append(res)
-        pkl.dump(tot_res, open('opt3_complete_' + str(model_num) + '.pkl', 'wb'))
+        pkl.dump(tot_res, open('opt4_complete_' + str(model_num) + '.pkl', 'wb'))
 
     print(res)
     return -np.array(tot_res).mean()
