@@ -1,4 +1,12 @@
 import time
+
+
+sys.path.append(r'C:\Users\user\workspace\scikit-optimize')
+sys.path.append(r'C:\Users\user\workspace\scikit-optimize\skopt')
+
+
+sys.path.append('/home/eliransc/projects/def-dkrass/eliransc/scikit-optimize')
+sys.path.append('/home/eliransc/projects/def-dkrass/eliransc/scikit-optimize\skopt')
 from bayes_opt import BayesianOptimization
 # from bayesian_optimization import BayesianOptimization
 # Supress NaN warnings
@@ -7,8 +15,10 @@ warnings.filterwarnings("ignore", category =RuntimeWarning)
 import numpy as np
 import matplotlib.pyplot as plt
 import sys
-sys.path.append(r'C:\Users\user\workspace\scikit-optimize')
-sys.path.append(r'C:\Users\user\workspace\scikit-optimize\skopt')
+
+
+
+
 
 import pickle as pkl
 
